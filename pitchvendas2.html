@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avaliação de Pitch de Vendas</title>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0881ed 0%, #0082f4 100%);
+            min-height: 100%;
+            width: 100%;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin: 0;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 350px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card h2 {
+            color: #0881ed;
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+            min-height: 3.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .card p {
+            color: #666;
+            margin: 0 0 1.5rem 0;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            width: 100%;
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0881ed 0%, #0082f4 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(8, 129, 237, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #0881ed;
+            border: 2px solid #0881ed;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #0881ed;
+            color: white;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .form-container.active {
+            display: block;
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #0881ed;
+        }
+        
+        .form-header h2 {
+            color: #0881ed;
+            margin: 0;
+        }
+        
+        .btn-back {
+            background: transparent;
+            color: #0881ed;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: background 0.2s ease;
+            border-radius: 6px;
+        }
+        
+        .btn-back:hover {
+            background: rgba(8, 129, 237, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0881ed;
+        }
+        
+        .question-section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .question-section h3 {
+            color: #0881ed;
+            margin: 0 0 1.5rem 0;
+            font-size: 1.3rem;
+        }
+        
+        .question-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .question-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .question-item p {
+            color: #333;
+            font-weight: 500;
+            margin: 0 0 1rem 0;
+        }
+        
+        .rating-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .rating-btn {
+            flex: 1;
+            min-width: 50px;
+            max-width: 70px;
+            height: 50px;
+            padding: 0;
+            border: 2px solid #0881ed;
+            background: white;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0881ed;
+        }
+        
+        .rating-btn:hover {
+            border-color: #0881ed;
+            background: rgba(8, 129, 237, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .rating-btn.selected {
+            background: #0881ed;
+            color: white;
+            border-color: #0881ed;
+        }
+        
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .password-modal.active {
+            display: flex;
+        }
+        
+        .password-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .password-content h3 {
+            color: #0881ed;
+            margin: 0 0 1.5rem 0;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .modal-buttons button {
+            flex: 1;
+        }
+        
+        .dashboard-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .dashboard-container.active {
+            display: block;
+        }
+        
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #0881ed;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #0881ed 0%, #0082f4 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .chart-container {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .chart-container h3 {
+            color: #0881ed;
+            margin: 0 0 1.5rem 0;
+        }
+        
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .bar-label {
+            min-width: 200px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .bar-track {
+            flex: 1;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #0881ed 0%, #0082f4 100%);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.75rem;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .ranking-table th,
+        .ranking-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .ranking-table th {
+            background: #0881ed;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .ranking-table tr:hover {
+            background: rgba(8, 129, 237, 0.05);
+        }
+        
+        .ranking-position {
+            font-weight: 700;
+            color: #0881ed;
+            font-size: 1.2rem;
+        }
+        
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .error-message.active {
+            display: block;
+        }
+        
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .success-message.active {
+            display: block;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #0881ed;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .bar-label {
+                min-width: 150px;
+                font-size: 0.9rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+ </head>
+ <body>
+  <div class="container"><!-- Página Inicial -->
+   <div id="home-page">
+    <div class="header">
+     <h1 id="main-title">Avaliação de Pitch de Vendas</h1>
+     <p>Sistema de avaliação de apresentações comerciais</p>
+    </div>
+    <div class="cards-grid">
+     <div class="card" onclick="showStudentForm()">
+      <div class="card-icon">
+       🎓
+      </div>
+      <h2 id="student-card-title">Avaliação - Aluno</h2>
+      <p>Avalie as apresentações dos seus colegas</p><button class="btn-primary">Iniciar Avaliação</button>
+     </div>
+     <div class="card" onclick="handleTeacherCardClick()">
+      <div class="card-icon">
+       👨‍🏫
+      </div>
+      <h2 id="teacher-card-title">Avaliação - Professor</h2>
+      <p>Área restrita para professores</p><button class="btn-primary">Acessar com Senha</button>
+     </div>
+     <div class="card" onclick="showDashboard()">
+      <div class="card-icon">
+       📊
+      </div>
+      <h2>Resultados</h2>
+      <p>Visualize estatísticas e rankings</p><button class="btn-primary" id="results-button">Ver Resultados</button>
+     </div>
+    </div>
+   </div><!-- Modal de Login e Cadastro -->
+   <div id="password-modal" class="password-modal">
+    <div class="password-content"><!-- Tela de Login -->
+     <div id="login-screen">
+      <h3>Acesso de Professor</h3>
+      <div class="form-group"><label for="username-input">Usuário:</label> <input type="text" id="username-input" placeholder="Digite o usuário">
+      </div>
+      <div class="form-group"><label for="password-input">Senha:</label> <input type="password" id="password-input" placeholder="Digite a senha">
+      </div>
+      <div class="modal-buttons"><button class="btn-secondary" onclick="closePasswordModal()">Cancelar</button> <button class="btn-primary" onclick="checkPassword()">Entrar</button>
+      </div>
+      <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;"><a href="#" onclick="showRegisterScreen(); return false;" style="color: #0881ed; text-decoration: none; font-weight: 600;">Não possui login? Clique para cadastrar.</a>
+      </div>
+     </div><!-- Tela de Cadastro -->
+     <div id="register-screen" style="display: none;">
+      <h3>Cadastro de Professor</h3>
+      <form id="register-form" onsubmit="registerTeacher(event)">
+       <div class="form-group"><label for="register-nome">Nome:</label> <input type="text" id="register-nome" required oninput="updateGeneratedUsername()">
+       </div>
+       <div class="form-group"><label for="register-sobrenome">Sobrenome:</label> <input type="text" id="register-sobrenome" required oninput="updateGeneratedUsername()">
+       </div>
+       <div class="form-group"><label for="generated-username">Usuário Gerado:</label> <input type="text" id="generated-username" readonly style="background: #f0f0f0; cursor: not-allowed;">
+       </div>
+       <div class="form-group"><label for="register-password">Senha:</label> <input type="password" id="register-password" required>
+       </div>
+       <div class="form-group"><label for="register-master-password">Senha de autorização para cadastro:</label> <input type="password" id="register-master-password" required>
+        <div id="master-password-error" class="error-message" style="margin-top: 0.5rem;"></div>
+       </div>
+       <div class="modal-buttons"><button type="button" class="btn-secondary" onclick="showLoginScreen()">Voltar</button> <button type="submit" class="btn-primary">Cadastrar</button>
+       </div>
+       <div id="register-error" class="error-message" style="margin-top: 1rem;"></div>
+       <div id="register-success" class="success-message" style="margin-top: 1rem;"></div>
+      </form>
+     </div>
+    </div>
+   </div><!-- Formulário Aluno -->
+   <div id="student-form" class="form-container">
+    <div class="form-header">
+     <h2>Avaliação - Aluno</h2><button class="btn-back" onclick="backToHome()">← Voltar</button>
+    </div>
+    <div class="loading" id="student-loading">
+     Salvando avaliação...
+    </div>
+    <form id="student-form-content" onsubmit="submitStudentForm(event)">
+     <div class="form-group"><label for="student-name">Nome:</label> <input type="text" id="student-name" required>
+     </div>
+     <div class="form-group"><label for="student-turma">Turma:</label> <select id="student-turma" required> <option value="">Selecione...</option> <option value="Vendas – Turma 1">Vendas – Turma 1</option> <option value="Vendas – Turma 2">Vendas – Turma 2</option> <option value="Vendas – Turma 3">Vendas – Turma 3</option> </select>
+     </div>
+     <div class="form-group"><label for="student-grupo">Grupo:</label> <select id="student-grupo" required> <option value="">Selecione...</option> <option value="Grupo 1">Grupo 1</option> <option value="Grupo 2">Grupo 2</option> <option value="Grupo 3">Grupo 3</option> <option value="Grupo 4">Grupo 4</option> </select>
+     </div>
+     <div class="question-section">
+      <h3>Clareza e Objetividade</h3>
+      <div class="question-item">
+       <p>A apresentação foi clara?</p>
+       <div class="rating-buttons" data-question="clareza_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>A explicação foi direta?</p>
+       <div class="rating-buttons" data-question="clareza_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Domínio do Conteúdo</h3>
+      <div class="question-item">
+       <p>Demonstrou segurança?</p>
+       <div class="rating-buttons" data-question="dominio_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>Respondeu bem às perguntas?</p>
+       <div class="rating-buttons" data-question="dominio_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Comunicação e Oratória</h3>
+      <div class="question-item">
+       <p>A fala foi articulada?</p>
+       <div class="rating-buttons" data-question="comunicacao_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>A postura foi profissional?</p>
+       <div class="rating-buttons" data-question="comunicacao_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Persuasão e Argumentação</h3>
+      <div class="question-item">
+       <p>O produto foi vendido de forma convincente?</p>
+       <div class="rating-buttons" data-question="persuasao_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>O valor foi justificado?</p>
+       <div class="rating-buttons" data-question="persuasao_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Criatividade</h3>
+      <div class="question-item">
+       <p>Houve originalidade?</p>
+       <div class="rating-buttons" data-question="criatividade_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>O formato da apresentação teve diferencial?</p>
+       <div class="rating-buttons" data-question="criatividade_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div><button type="submit" class="btn-primary">Enviar Avaliação</button>
+     <div class="error-message" id="student-error"></div>
+     <div class="success-message" id="student-success"></div>
+    </form>
+   </div><!-- Formulário Professor -->
+   <div id="teacher-form" class="form-container">
+    <div class="form-header">
+     <h2>Avaliação - Professor</h2>
+     <div style="display: flex; gap: 1rem;"><button class="btn-back" onclick="logoutTeacher()">Sair</button> <button class="btn-back" onclick="backToHome()">← Voltar</button>
+     </div>
+    </div>
+    <div id="teacher-identifier" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: none;">
+     <p style="margin: 0; color: #0881ed; font-weight: 600; font-size: 1.1rem;"><strong>Avaliador:</strong> <span id="teacher-full-name"></span></p>
+    </div>
+    <div class="loading" id="teacher-loading">
+     Salvando avaliação...
+    </div>
+    <form id="teacher-form-content" onsubmit="submitTeacherForm(event)">
+     <div class="form-group" id="teacher-name-group"><label for="teacher-name">Nome do Professor:</label> <input type="text" id="teacher-name" required>
+     </div>
+     <div class="form-group"><label for="teacher-turma">Turma:</label> <select id="teacher-turma" required> <option value="">Selecione...</option> <option value="Vendas – Turma 1">Vendas – Turma 1</option> <option value="Vendas – Turma 2">Vendas – Turma 2</option> <option value="Vendas – Turma 3">Vendas – Turma 3</option> </select>
+     </div>
+     <div class="form-group"><label for="teacher-grupo">Grupo:</label> <select id="teacher-grupo" required> <option value="">Selecione...</option> <option value="Grupo 1">Grupo 1</option> <option value="Grupo 2">Grupo 2</option> <option value="Grupo 3">Grupo 3</option> <option value="Grupo 4">Grupo 4</option> </select>
+     </div>
+     <div class="question-section">
+      <h3>Clareza e Objetividade</h3>
+      <div class="question-item">
+       <p>A apresentação foi clara?</p>
+       <div class="rating-buttons" data-question="clareza_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>A explicação foi direta?</p>
+       <div class="rating-buttons" data-question="clareza_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Domínio do Conteúdo</h3>
+      <div class="question-item">
+       <p>Demonstrou segurança?</p>
+       <div class="rating-buttons" data-question="dominio_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>Respondeu bem às perguntas?</p>
+       <div class="rating-buttons" data-question="dominio_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Comunicação e Oratória</h3>
+      <div class="question-item">
+       <p>A fala foi articulada?</p>
+       <div class="rating-buttons" data-question="comunicacao_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>A postura foi profissional?</p>
+       <div class="rating-buttons" data-question="comunicacao_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Persuasão e Argumentação</h3>
+      <div class="question-item">
+       <p>O produto foi vendido de forma convincente?</p>
+       <div class="rating-buttons" data-question="persuasao_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>O valor foi justificado?</p>
+       <div class="rating-buttons" data-question="persuasao_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div>
+     <div class="question-section">
+      <h3>Criatividade</h3>
+      <div class="question-item">
+       <p>Houve originalidade?</p>
+       <div class="rating-buttons" data-question="criatividade_p1"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+      <div class="question-item">
+       <p>O formato da apresentação teve diferencial?</p>
+       <div class="rating-buttons" data-question="criatividade_p2"><button type="button" class="rating-btn" data-value="1">1</button> <button type="button" class="rating-btn" data-value="2">2</button> <button type="button" class="rating-btn" data-value="3">3</button> <button type="button" class="rating-btn" data-value="4">4</button> <button type="button" class="rating-btn" data-value="5">5</button>
+       </div>
+      </div>
+     </div><button type="submit" class="btn-primary">Enviar Avaliação</button>
+     <div class="error-message" id="teacher-error"></div>
+     <div class="success-message" id="teacher-success"></div>
+    </form>
+   </div><!-- Dashboard -->
+   <div id="dashboard" class="dashboard-container">
+    <div class="form-header">
+     <h2>Dashboard de Resultados</h2><button class="btn-back" onclick="backToHome()">← Voltar</button>
+    </div>
+    <div class="filters">
+     <div class="form-group"><label for="filter-turma">Turma:</label> <select id="filter-turma" onchange="updateDashboard()"> <option value="">Todas</option> <option value="Vendas – Turma 1">Vendas – Turma 1</option> <option value="Vendas – Turma 2">Vendas – Turma 2</option> <option value="Vendas – Turma 3">Vendas – Turma 3</option> </select>
+     </div>
+     <div class="form-group"><label for="filter-grupo">Grupo:</label> <select id="filter-grupo" onchange="updateDashboard()"> <option value="">Todos</option> <option value="Grupo 1">Grupo 1</option> <option value="Grupo 2">Grupo 2</option> <option value="Grupo 3">Grupo 3</option> <option value="Grupo 4">Grupo 4</option> </select>
+     </div>
+     <div class="form-group"><label for="filter-tipo">Tipo de Avaliação:</label> <select id="filter-tipo" onchange="updateDashboard()"> <option value="Final">Final (Ponderada)</option> <option value="Aluno">Aluno</option> <option value="Professor">Professor</option> </select>
+     </div>
+    </div>
+    <div class="stats-grid" id="stats-container"></div>
+    <div class="chart-container">
+     <h3>Médias por Critério</h3>
+     <div class="bar-chart" id="criteria-chart"></div>
+    </div>
+    <div class="chart-container" id="ranking-container">
+     <h3>Ranking dos Grupos</h3>
+     <table class="ranking-table" id="ranking-table">
+      <thead>
+       <tr>
+        <th>Posição</th>
+        <th>Grupo</th>
+        <th>Turma</th>
+        <th>Média Final</th>
+       </tr>
+      </thead>
+      <tbody id="ranking-body"></tbody>
+     </table>
+    </div>
+   </div>
+  </div>
+
+  <script>
+    // --------------------------
+    // CONFIGURAÇÃO SUPABASE
+    // --------------------------
+    const SUPABASE_URL = "https://fruqiikbzmxvhoecxffh.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZydXFpaWtiem14dmhvZWN4ZmZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5NzM0MTIsImV4cCI6MjA3OTU0OTQxMn0.uTylMcWe-y94eCymSF0Bn368jwqIb6bdL2PTapaFQo0";
+    const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // --------------------------
+    // CONSTANTES E ESTADO
+    // --------------------------
+    const TEACHER_USERNAME = 'professor';
+    const TEACHER_PASSWORD = 'expoente25';
+    const MASTER_PASSWORD = 'expoente25';
+
+    let allData = [];
+    let ratings = {};
+    let teacherAccounts = [];
+
+    const defaultConfig = {
+      main_title: 'Avaliação de Pitch de Vendas',
+      student_card_title: 'Avaliação - Aluno',
+      teacher_card_title: 'Avaliação - Professor',
+      results_button_text: 'Ver Resultados'
+    };
+
+    // --------------------------
+    // UTILITÁRIOS
+    // --------------------------
+    function removeAccents(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function capitalizeFirstLetter(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    function showMessage(elementId, message) {
+      const element = document.getElementById(elementId);
+      element.textContent = message;
+      element.classList.add('active');
+      setTimeout(() => {
+        element.classList.remove('active');
+      }, 5000);
+    }
+
+    // --------------------------
+    // RATING BUTTONS
+    // --------------------------
+    function setupRatingButtons() {
+      document.querySelectorAll('.rating-buttons').forEach(container => {
+        const buttons = container.querySelectorAll('.rating-btn');
+        const question = container.dataset.question;
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            ratings[question] = parseInt(btn.dataset.value);
+          });
+        });
+      });
+    }
+
+    // --------------------------
+    // SUPABASE - LOAD DATA
+    // --------------------------
+    async function loadAllData() {
+      try {
+        const { data, error } = await supabase
+          .from('evaluations')
+          .select('*');
+
+        if (error) {
+          console.error('Erro ao carregar avaliações:', error);
+          allData = [];
+        } else {
+          allData = data || [];
+        }
+      } catch (err) {
+        console.error(err);
+        allData = [];
+      }
+    }
+
+    async function loadTeacherAccounts() {
+      try {
+        const { data, error } = await supabase
+          .from('teacher_accounts')
+          .select('*');
+
+        if (error) {
+          console.error('Erro ao carregar accounts:', error);
+          teacherAccounts = [];
+        } else {
+          teacherAccounts = data || [];
+        }
+      } catch (err) {
+        console.error(err);
+        teacherAccounts = [];
+      }
+    }
+
+    // --------------------------
+    // INIT APP
+    // --------------------------
+    async function initApp() {
+      // Carregar dados do Supabase
+      await Promise.all([loadAllData(), loadTeacherAccounts()]);
+      setupRatingButtons();
+    }
+
+    // --------------------------
+    // FORM FLOW (mostrar/ocultar)
+    // --------------------------
+    function showStudentForm() {
+      document.getElementById('home-page').style.display = 'none';
+      document.getElementById('student-form').classList.add('active');
+      resetForm('student');
+    }
+
+    function handleTeacherCardClick() {
+      if (isTeacherLoggedIn()) {
+        showTeacherForm();
+      } else {
+        showPasswordModal();
+      }
+    }
+
+    function isTeacherLoggedIn() {
+      return localStorage.getItem('teacherLoggedIn') === 'true';
+    }
+
+    function showPasswordModal() {
+      document.getElementById('password-modal').classList.add('active');
+      showLoginScreen();
+    }
+
+    function closePasswordModal() {
+      document.getElementById('password-modal').classList.remove('active');
+      showLoginScreen();
+    }
+
+    function showLoginScreen() {
+      document.getElementById('login-screen').style.display = 'block';
+      document.getElementById('register-screen').style.display = 'none';
+      document.getElementById('username-input').value = '';
+      document.getElementById('password-input').value = '';
+
+      const loginError = document.querySelector('#login-screen .error-message');
+      if (loginError) loginError.remove();
+    }
+
+    function showRegisterScreen() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('register-screen').style.display = 'block';
+      document.getElementById('register-form').reset();
+      document.getElementById('generated-username').value = '';
+      document.getElementById('register-error').classList.remove('active');
+      document.getElementById('register-success').classList.remove('active');
+      document.getElementById('master-password-error').classList.remove('active');
+    }
+
+    function backToHome() {
+      document.getElementById('home-page').style.display = 'block';
+      document.getElementById('student-form').classList.remove('active');
+      document.getElementById('teacher-form').classList.remove('active');
+      document.getElementById('dashboard').classList.remove('active');
+    }
+
+    // --------------------------
+    // REGISTER TEACHER
+    // --------------------------
+    function updateGeneratedUsername() {
+      const nome = document.getElementById('register-nome').value.trim();
+      const sobrenome = document.getElementById('register-sobrenome').value.trim();
+
+      if (nome && sobrenome) {
+        const username = removeAccents(nome.toLowerCase()) + '.' + removeAccents(sobrenome.toLowerCase());
+        document.getElementById('generated-username').value = username;
+      } else {
+        document.getElementById('generated-username').value = '';
+      }
+    }
+
+    async function registerTeacher(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById('register-nome').value.trim();
+      const sobrenome = document.getElementById('register-sobrenome').value.trim();
+      const password = document.getElementById('register-password').value;
+      const masterPassword = document.getElementById('register-master-password').value;
+
+      const masterError = document.getElementById('master-password-error');
+      if (masterPassword !== MASTER_PASSWORD) {
+        masterError.textContent = 'Senha de autorização incorreta!';
+        masterError.classList.add('active');
+        return;
+      } else {
+        masterError.classList.remove('active');
+      }
+
+      const formattedNome = capitalizeFirstLetter(nome);
+      const formattedSobrenome = capitalizeFirstLetter(sobrenome);
+      const username = removeAccents(nome.toLowerCase()) + '.' + removeAccents(sobrenome.toLowerCase());
+
+      // Verificar duplicidade no Supabase
+      try {
+        const { data: existing, error: selError } = await supabase
+          .from('teacher_accounts')
+          .select('id')
+          .eq('username', username)
+          .limit(1);
+
+        if (selError) {
+          console.error(selError);
+        }
+
+        if (existing && existing.length > 0) {
+          document.getElementById('register-error').textContent = 'Este nome de usuário já existe. Use nomes diferentes.';
+          document.getElementById('register-error').classList.add('active');
+          document.getElementById('register-success').classList.remove('active');
+          return;
+        }
+
+        const { error: insertError } = await supabase.from('teacher_accounts').insert([{
+          nome: formattedNome,
+          sobrenome: formattedSobrenome,
+          username,
+          password
+        }]);
+
+        if (!insertError) {
+          document.getElementById('register-error').classList.remove('active');
+          document.getElementById('register-success').textContent = 'Usuário criado com sucesso!';
+          document.getElementById('register-success').classList.add('active');
+          await loadTeacherAccounts();
+          setTimeout(() => {
+            showLoginScreen();
+            document.getElementById('username-input').value = username;
+          }, 1200);
+        } else {
+          document.getElementById('register-success').classList.remove('active');
+          document.getElementById('register-error').textContent = 'Erro ao criar conta. Tente novamente.';
+          document.getElementById('register-error').classList.add('active');
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('register-error').textContent = 'Erro ao criar conta. Tente novamente.';
+        document.getElementById('register-error').classList.add('active');
+      }
+    }
+
+    // --------------------------
+    // LOGIN / LOGOUT
+    // --------------------------
+    function checkPassword() {
+      const username = document.getElementById('username-input').value.trim();
+      const password = document.getElementById('password-input').value;
+
+      let isValid = false;
+
+      if (username === TEACHER_USERNAME && password === TEACHER_PASSWORD) {
+        isValid = true;
+      }
+
+      const account = teacherAccounts.find(acc => acc.username === username && acc.password === password);
+      if (account) isValid = true;
+
+      if (isValid) {
+        localStorage.setItem('teacherLoggedIn', 'true');
+        localStorage.setItem('teacherUsername', username);
+        closePasswordModal();
+        showTeacherForm();
+      } else {
+        const loginScreen = document.getElementById('login-screen');
+        const existingError = loginScreen.querySelector('.error-message');
+        if (existingError) existingError.remove();
+
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message active';
+        errorDiv.textContent = 'Usuário ou senha incorretos!';
+
+        const modalButtons = loginScreen.querySelector('.modal-buttons');
+        loginScreen.insertBefore(errorDiv, modalButtons);
+        setTimeout(() => errorDiv.remove(), 3000);
+      }
+    }
+
+    function logoutTeacher() {
+      localStorage.removeItem('teacherLoggedIn');
+      localStorage.removeItem('teacherUsername');
+
+      document.getElementById('teacher-identifier').style.display = 'none';
+      document.getElementById('teacher-name-group').style.display = 'block';
+      document.getElementById('teacher-name').setAttribute('required', '');
+      document.getElementById('teacher-name').value = '';
+
+      backToHome();
+    }
+
+    // --------------------------
+    // SHOW TEACHER FORM
+    // --------------------------
+    function showTeacherForm() {
+      document.getElementById('home-page').style.display = 'none';
+      document.getElementById('teacher-form').classList.add('active');
+
+      const username = localStorage.getItem('teacherUsername');
+      if (username) {
+        let teacherFullName = '';
+
+        if (username === TEACHER_USERNAME) {
+          teacherFullName = 'Professor';
+        } else {
+          const account = teacherAccounts.find(acc => acc.username === username);
+          if (account) {
+            teacherFullName = `${account.nome} ${account.sobrenome}`;
+          }
+        }
+
+        if (teacherFullName) {
+          document.getElementById('teacher-identifier').style.display = 'block';
+          document.getElementById('teacher-full-name').textContent = teacherFullName;
+          document.getElementById('teacher-name-group').style.display = 'none';
+          document.getElementById('teacher-name').value = teacherFullName;
+          document.getElementById('teacher-name').removeAttribute('required');
+        }
+      } else {
+        document.getElementById('teacher-identifier').style.display = 'none';
+        document.getElementById('teacher-name-group').style.display = 'block';
+        document.getElementById('teacher-name').setAttribute('required', '');
+      }
+
+      resetForm('teacher');
+    }
+
+    // --------------------------
+    // RESET FORM
+    // --------------------------
+    function resetForm(type) {
+      ratings = {};
+      document.querySelectorAll(`#${type}-form .rating-btn`).forEach(btn => btn.classList.remove('selected'));
+      // fix: selectors in markup are like 'student-form' wrapper and '#student-form-content' the form
+      document.querySelectorAll(`#${type}-form .rating-btn`);
+      const formContent = document.getElementById(`${type}-form-content`);
+      if (formContent) formContent.reset();
+      const err = document.getElementById(`${type}-error`);
+      const succ = document.getElementById(`${type}-success`);
+      if (err) err.classList.remove('active');
+      if (succ) succ.classList.remove('active');
+      // clear selected rating buttons
+      document.querySelectorAll('.rating-btn.selected').forEach(b => b.classList.remove('selected'));
+    }
+
+    // --------------------------
+    // SUBMIT STUDENT FORM
+    // --------------------------
+    async function submitStudentForm(event) {
+      event.preventDefault();
+
+      const requiredQuestions = ['clareza_p1', 'clareza_p2', 'dominio_p1', 'dominio_p2',
+        'comunicacao_p1', 'comunicacao_p2', 'persuasao_p1', 'persuasao_p2',
+        'criatividade_p1', 'criatividade_p2'];
+
+      for (const q of requiredQuestions) {
+        if (!ratings[q]) {
+          showMessage('student-error', 'Você precisa responder todas as perguntas antes de enviar.');
+          return;
+        }
+      }
+
+      const formData = {
+        tipo: 'Aluno',
+        nome: document.getElementById('student-name').value,
+        turma: document.getElementById('student-turma').value,
+        grupo: document.getElementById('student-grupo').value,
+        ...ratings
+      };
+
+      document.getElementById('student-loading').classList.add('active');
+
+      try {
+        const { error } = await supabase.from('evaluations').insert([formData]);
+        document.getElementById('student-loading').classList.remove('active');
+
+        if (!error) {
+          showMessage('student-success', 'Avaliação enviada com sucesso!');
+          await loadAllData();
+          setTimeout(() => {
+            backToHome();
+          }, 1200);
+        } else {
+          console.error(error);
+          showMessage('student-error', 'Erro ao salvar avaliação. Tente novamente.');
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('student-loading').classList.remove('active');
+        showMessage('student-error', 'Erro ao salvar avaliação. Tente novamente.');
+      }
+    }
+
+    // --------------------------
+    // SUBMIT TEACHER FORM
+    // --------------------------
+    async function submitTeacherForm(event) {
+      event.preventDefault();
+
+      const requiredQuestions = ['clareza_p1', 'clareza_p2', 'dominio_p1', 'dominio_p2',
+        'comunicacao_p1', 'comunicacao_p2', 'persuasao_p1', 'persuasao_p2',
+        'criatividade_p1', 'criatividade_p2'];
+
+      for (const q of requiredQuestions) {
+        if (!ratings[q]) {
+          showMessage('teacher-error', 'Você precisa responder todas as perguntas antes de enviar.');
+          return;
+        }
+      }
+
+      const nome = document.getElementById('teacher-name').value;
+      const turma = document.getElementById('teacher-turma').value;
+      const grupo = document.getElementById('teacher-grupo').value;
+
+      const duplicateKey = `${nome}_${turma}_${grupo}`;
+      const hasDuplicate = allData.some(item =>
+        item.tipo === 'Professor' &&
+        `${item.nome}_${item.turma}_${item.grupo}` === duplicateKey
+      );
+
+      if (hasDuplicate) {
+        showMessage('teacher-error', 'Você já avaliou este grupo desta turma. Não é possível enviar nova avaliação.');
+        return;
+      }
+
+      const formData = {
+        tipo: 'Professor',
+        nome,
+        turma,
+        grupo,
+        ...ratings
+      };
+
+      document.getElementById('teacher-loading').classList.add('active');
+
+      try {
+        const { error } = await supabase.from('evaluations').insert([formData]);
+        document.getElementById('teacher-loading').classList.remove('active');
+
+        if (!error) {
+          showMessage('teacher-success', 'Avaliação enviada com sucesso!');
+          await loadAllData();
+          setTimeout(() => {
+            resetForm('teacher');
+            window.scrollTo(0, 0);
+          }, 1200);
+        } else {
+          console.error(error);
+          showMessage('teacher-error', 'Erro ao salvar avaliação. Tente novamente.');
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('teacher-loading').classList.remove('active');
+        showMessage('teacher-error', 'Erro ao salvar avaliação. Tente novamente.');
+      }
+    }
+
+    // --------------------------
+    // DASHBOARD
+    // --------------------------
+    function updateDashboard() {
+      const filterTurma = document.getElementById('filter-turma').value;
+      const filterGrupo = document.getElementById('filter-grupo').value;
+      const filterTipo = document.getElementById('filter-tipo').value;
+
+      let filteredData = allData.filter(item => {
+        if (filterTurma && item.turma !== filterTurma) return false;
+        if (filterGrupo && item.grupo !== filterGrupo) return false;
+        return true;
+      });
+
+      updateStats(filteredData, filterTipo);
+      updateCriteriaChart(filteredData, filterTipo);
+      updateRanking(filteredData, filterGrupo);
+    }
+
+    function updateStats(data, tipo) {
+      const container = document.getElementById('stats-container');
+
+      const alunoData = data.filter(item => item.tipo === 'Aluno');
+      const profData = data.filter(item => item.tipo === 'Professor');
+
+      const alunoAvg = calculateOverallAverage(alunoData);
+      const profAvg = calculateOverallAverage(profData);
+      const finalAvg = (alunoAvg * 0.3 + profAvg * 0.7);
+
+      let html = '';
+
+      if (tipo === 'Final' || tipo === 'Aluno') {
+        html += `
+                    <div class="stat-card">
+                        <h4>Média Geral - Alunos</h4>
+                        <p class="value">${alunoAvg.toFixed(2)}</p>
+                    </div>
+                `;
+      }
+
+      if (tipo === 'Final' || tipo === 'Professor') {
+        html += `
+                    <div class="stat-card">
+                        <h4>Média Geral - Professores</h4>
+                        <p class="value">${profAvg.toFixed(2)}</p>
+                    </div>
+                `;
+      }
+
+      if (tipo === 'Final') {
+        html += `
+                    <div class="stat-card">
+                        <h4>Média Final Ponderada</h4>
+                        <p class="value">${finalAvg.toFixed(2)}</p>
+                        <small style="opacity: 0.9; font-size: 0.85rem;">Cálculo considerando 30% alunos + 70% professores</small>
+                    </div>
+                `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    function calculateOverallAverage(data) {
+      if (data.length === 0) return 0;
+
+      const questions = ['clareza_p1', 'clareza_p2', 'dominio_p1', 'dominio_p2',
+        'comunicacao_p1', 'comunicacao_p2', 'persuasao_p1', 'persuasao_p2',
+        'criatividade_p1', 'criatividade_p2'];
+
+      let sum = 0;
+      let count = 0;
+
+      data.forEach(item => {
+        questions.forEach(q => {
+          if (item[q]) {
+            sum += item[q];
+            count++;
+          }
+        });
+      });
+
+      return count > 0 ? sum / count : 0;
+    }
+
+    function updateCriteriaChart(data, tipo) {
+      const container = document.getElementById('criteria-chart');
+
+      let filterData = data;
+      if (tipo === 'Aluno') {
+        filterData = data.filter(item => item.tipo === 'Aluno');
+      } else if (tipo === 'Professor') {
+        filterData = data.filter(item => item.tipo === 'Professor');
+      }
+
+      const criteria = [
+        { name: 'Clareza e Objetividade', questions: ['clareza_p1', 'clareza_p2'] },
+        { name: 'Domínio do Conteúdo', questions: ['dominio_p1', 'dominio_p2'] },
+        { name: 'Comunicação e Oratória', questions: ['comunicacao_p1', 'comunicacao_p2'] },
+        { name: 'Persuasão e Argumentação', questions: ['persuasao_p1', 'persuasao_p2'] },
+        { name: 'Criatividade', questions: ['criatividade_p1', 'criatividade_p2'] }
+      ];
+
+      let html = '';
+
+      criteria.forEach(criterion => {
+        let avg = 0;
+        if (tipo === 'Final') {
+          const alunoData = data.filter(item => item.tipo === 'Aluno');
+          const profData = data.filter(item => item.tipo === 'Professor');
+          const alunoAvg = calculateCriteriaAverage(alunoData, criterion.questions);
+          const profAvg = calculateCriteriaAverage(profData, criterion.questions);
+          avg = (alunoAvg * 0.3 + profAvg * 0.7);
+        } else {
+          avg = calculateCriteriaAverage(filterData, criterion.questions);
+        }
+
+        const percentage = (avg / 5) * 100;
+
+        html += `
+                    <div class="bar-item">
+                        <div class="bar-label">${criterion.name}</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: ${percentage}%">
+                                ${avg.toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function calculateCriteriaAverage(data, questions) {
+      if (data.length === 0) return 0;
+
+      let sum = 0;
+      let count = 0;
+
+      data.forEach(item => {
+        questions.forEach(q => {
+          if (item[q]) {
+            sum += item[q];
+            count++;
+          }
+        });
+      });
+
+      return count > 0 ? sum / count : 0;
+    }
+
+    function updateRanking(data, filterGrupo) {
+      const tbody = document.getElementById('ranking-body');
+      const rankingContainer = document.getElementById('ranking-container');
+
+      if (filterGrupo) {
+        rankingContainer.style.display = 'none';
+        return;
+      }
+
+      rankingContainer.style.display = 'block';
+
+      const grupos = {};
+
+      data.forEach(item => {
+        const key = `${item.turma}_${item.grupo}`;
+        if (!grupos[key]) {
+          grupos[key] = {
+            turma: item.turma,
+            grupo: item.grupo,
+            alunoScores: [],
+            profScores: []
+          };
+        }
+
+        const questions = ['clareza_p1', 'clareza_p2', 'dominio_p1', 'dominio_p2',
+          'comunicacao_p1', 'comunicacao_p2', 'persuasao_p1', 'persuasao_p2',
+          'criatividade_p1', 'criatividade_p2'];
+
+        let score = 0;
+        let count = 0;
+        questions.forEach(q => {
+          if (item[q]) {
+            score += item[q];
+            count++;
+          }
+        });
+
+        const avg = count > 0 ? score / count : 0;
+
+        if (item.tipo === 'Aluno') {
+          grupos[key].alunoScores.push(avg);
+        } else {
+          grupos[key].profScores.push(avg);
+        }
+      });
+
+      const ranking = Object.values(grupos).map(grupo => {
+        const alunoAvg = grupo.alunoScores.length > 0
+          ? grupo.alunoScores.reduce((a, b) => a + b, 0) / grupo.alunoScores.length
+          : 0;
+        const profAvg = grupo.profScores.length > 0
+          ? grupo.profScores.reduce((a, b) => a + b, 0) / grupo.profScores.length
+          : 0;
+        const finalAvg = (alunoAvg * 0.3 + profAvg * 0.7);
+
+        return {
+          ...grupo,
+          finalAvg
+        };
+      }).sort((a, b) => b.finalAvg - a.finalAvg);
+
+      let html = '';
+      ranking.forEach((grupo, index) => {
+        html += `
+                    <tr>
+                        <td><span class="ranking-position">${index + 1}º</span></td>
+                        <td>${grupo.grupo}</td>
+                        <td>${grupo.turma}</td>
+                        <td><strong>${grupo.finalAvg.toFixed(2)}</strong></td>
+                    </tr>
+                `;
+      });
+
+      tbody.innerHTML = html || '<tr><td colspan="4" style="text-align: center;">Nenhum dado disponível</td></tr>';
+    }
+
+    // --------------------------
+    // SHOW DASHBOARD (carregar dados e exibir)
+    // --------------------------
+    function showDashboard() {
+      document.getElementById('home-page').style.display = 'none';
+      document.getElementById('dashboard').classList.add('active');
+      updateDashboard();
+    }
+
+    // --------------------------
+    // Inicialização
+    // --------------------------
+    initApp();
+
+  </script>
+ </body>
+</html>
